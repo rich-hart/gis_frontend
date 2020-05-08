@@ -152,6 +152,7 @@ var nemesisUI = {
 	id: 'wpr_viewport',
 	version: 'row',
 	flex: 'h',
+
 	arrive: function () {
 
 	},
@@ -570,9 +571,9 @@ var nemesisUI = {
 };
 
 $(document).on('ready', function () {
-	$(nemesisUI).createObject({
-		appendTo: 'body'
-	});
+//	$(nemesisUI).createObject({
+//		appendTo: 'body'
+//	});
 });
 
 
@@ -580,7 +581,7 @@ $(document).on('ready', function () {
 
 
 function red_alert() {
-	var view_port = document.getElementById("wpr_viewport");
+	var view_port = document.getElementById("bracket_32");
 	if (view_port.classList.contains('red-alert')) {
 
 		pJSDom[0].pJS.particles.line_linked.color = "#00cc99";

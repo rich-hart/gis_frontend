@@ -6,7 +6,7 @@
   display: inline-block;
   background-color: transparent;
     max-width: 100%;
-    max-height: 100%;
+    min-height: 100%;
 }
 
 .particles-js-canvas-el {
@@ -15,5 +15,19 @@
   top: 0px;
   z-index: 0;
     max-width: 100%;
+    min-height: 100%;
+}
+
+#profile_pic {
+    max-width: 100%;
+    min-height: 100%;
+
+}
+
+#bracket_32{
     max-height: 100%;
+    max-width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
