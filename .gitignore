@@ -1,0 +1,9 @@
+*.pyc
+venv
+geckodriver.log
+ghostdriver.log
+*.swp
+*/local.py
+db.sqlite3
+staticfiles
+.DS_Store
