@@ -48,15 +48,15 @@ for (idx in bracket_ids) {
   id = bracket_ids[idx];
   element = document.getElementById(id);
 //  debugger;
-  for (class_idx in element.classList){
-    class_name = element.classList[class_idx];
+//  for (class_idx in element.classList){
+//    class_name = element.classList[class_idx];
 //    debugger;
-    if (uiColors.includes(class_name)){
+ //   if (uiColors.includes(class_name)){
  //     debugger;
-      element.classList.remove(class_name);
-      element.classList.add(LCARS.colorGen(uiColors));
-    }
-  }
+//      element.classList.remove(class_name);
+//      element.classList.add(LCARS.colorGen(uiColors));
+//    }
+//  }
 };
 };
 
