@@ -175,9 +175,16 @@ $(document).on('ready', function(){
 function red_alert() {
   var view_port = document.getElementById("wpr_viewport");
   if (view_port.classList.contains('red-alert')) {
-    view_port.classList.remove('red-alert');
+
+	  pJSDom[0].pJS.particles.line_linked.color="#00cc99";
+  pJSDom[0].pJS.particles.line_linked.color_rgb_line =hexToRgb(pJSDom[0].pJS.particles.line_linked.color);
+
+	  view_port.classList.remove('red-alert');
   } else {
-    view_port.classList.add('red-alert');  
+  pJSDom[0].pJS.particles.line_linked.color="#cc0000";
+  pJSDom[0].pJS.particles.line_linked.color_rgb_line =hexToRgb(pJSDom[0].pJS.particles.line_linked.color);
+
+	  view_port.classList.add('red-alert');  
   }
 }
 
