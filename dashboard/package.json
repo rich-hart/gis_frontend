@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "angular-cookies": "^1.7.9",
     "chart.js": "^2.9.3",
     "express": "^4.16.4"
   }

@@ -8,7 +8,7 @@
  
     <!--<base href="/">-->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-
+    <script src="angular-cookies.js"></script>
     <!--<base href="/">-->
     <script type="text/javascript" src="lcarssdk/js/jquery.js"></script>
     <script type="text/javascript" src="lcarssdk/js/webviewinfo.js"></script>
@@ -41,43 +41,85 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
 
+<style>
 
+
+
+</style>
 
 </head>
 
 <body ontouchstart="" onload="main()" style="overflow:scroll">
+<div ng-app="scavenger_hunt">
 
-<script>
-var app = angular.module("scavenger_hunt", []);
-function join_urls(path_1, path_2){ return path_1 + path_2 }
-app.controller("scavenger_hunt_Ctrl", function($scope) {
 
-    var temp_api_root = "http://127.0.0.1:8000/api/scavenger_hunt/";
-    var API_ROOT = temp_api_root;
-    $scope.uiColors = [
-        "bg-blue-1",
-        "bg-blue-2",
-        "bg-blue-3",
-        "bg-blue-4",
-        "bg-green-1",
-        "bg-green-2",
-        "bg-green-3",
-        "bg-green-4"
-    ];
-    $scope.colorGen = function(){
-          return LCARS.colorGen($scope.uiColors)
-    };
-    
-    url = join_urls(API_ROOT,'challenges/');
-//    $http.get(url).then(function(response) {
-//        $scope.challenges = response.data['results'];
-//    });
-});
+<div ng-controller="ExampleController">
+</div>
+<div ng-controller="scavenger_hunt_Ctrl">
 
-</script>
 
+      <div class="wrapper sdk bracket typeA w3-container" ng-hide="logged_in" id="bracket_32" style="margin-top:40px;">
+         <div class="wrapper content" id="profile_pic">
+            <canvas class="particles-js-canvas-el"></canvas>
+            <img src="delta.png" id="delta">
+         </div>
+         <div class="elbow top-left small {{colorGen()}} no-event horizontal" id="elbow_6">
+            <div class="bar">
+               <div class="block"></div>
+            </div>
+            <div class="bar" id="bar_7"></div>
+         </div>
+         <div class="elbow top-right small {{colorGen()}} no-event horizontal" id="elbow_8">
+            <div class="bar">
+               <div class="block"></div>
+            </div>
+            <div class="bar" id="bar_9"></div>
+         </div>
+         <div class="elbow bottom-left small {{colorGen()}} no-event horizontal" id="elbow_10">
+            <div class="bar">
+               <div class="block"></div>
+            </div>
+            <div class="bar" id="bar_11"></div>
+         </div>
+         <div class="elbow bottom-right small {{colorGen()}} no-event horizontal" id="elbow_12">
+            <div class="bar">
+               <div class="block"></div>
+            </div>
+            <div class="bar" id="bar_13"></div>
+         </div>
+         <div class="column flexv" id="column_14">
+            <div class="bar flexcv {{colorGen()}}" id="bar_15"></div>
+            <div class="bar flexcv {{colorGen()}}" id="bar_16">
+               <div class="bar bg-white" id="bar_17"></div>
+            </div>
+            <div class="bar flexcv {{colorGen()}}" id="bar_18"></div>
+         </div>
+         <div class="column flexv" id="column_19">
+            <div class="bar flexcv {{colorGen()}}" id="bar_20"></div>
+            <div class="bar flexcv {{colorGen()}}" id="bar_21"></div>
+            <div class="bar flexcv {{colorGen()}}" id="bar_22"></div>
+         </div>
+         <div class="column flexv" id="column_23">
+            <div class="bar flexcv {{colorGen()}}" id="bar_24"></div>
+            <div class="bar flexcv {{colorGen()}}" id="bar_25">
+               <div class="bar bg-white" id="bar_26"></div>
+            </div>
+            <div class="bar flexcv {{colorGen()}}" id="bar_27"></div>
+         </div>
+         <div class="column flexv" id="column_28">
+            <div class="bar flexcv {{colorGen()}}" id="bar_29"></div>
+            <div class="bar flexcv {{colorGen()}}" id="bar_30"></div>
+            <div class="bar flexcv {{colorGen()}}" id="bar_31"></div>
+         </div>
+      </div>
+      <br>
+      <br>
+      <div class="wrapper sdk bracket typeA w3-container" ng-hide="logged_in" id="bracket_32" style="margin-top:40px;">
+          <a href="http://localhost:8001/login/facebook/">
+          <div class="button pill {{colorGen()}}" id="button_41" ng-click="login()" data-label="LOGIN" style="text-align:right;"></div></a>
+      </div>
 <!-- Navbar -->
-<div class="w3-top">
+<div class="w3-top ng-hide" ng-hide="logged_in">
  <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
   <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
   <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Logo</a>
@@ -107,7 +149,7 @@ app.controller("scavenger_hunt_Ctrl", function($scope) {
 </div>
 
 <!-- Page Container -->
-<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px;">    
+<div class="w3-container w3-content ng-hide" ng-hide="logged_in" style="max-width:1400px;margin-top:80px;">    
   <!-- The Grid -->
   <div class="w3-row">
     <!-- Left Column -->
@@ -115,7 +157,7 @@ app.controller("scavenger_hunt_Ctrl", function($scope) {
       <!-- Profile -->
       <div class="w3-card w3-black">
 
-            <div class="wrapper sdk bracket typeA w3-container" ng-app="scavenger_hunt" ng-controller="scavenger_hunt_Ctrl" id="bracket_32">
+            <div class="wrapper sdk bracket typeA w3-container" id="bracket_32">
                <div class="wrapper content" id="profile_pic">
                   <canvas class="particles-js-canvas-el"></canvas>
                   <img src="delta.png" id="delta">
@@ -352,13 +394,17 @@ app.controller("scavenger_hunt_Ctrl", function($scope) {
 <br>
 
 <!-- Footer -->
-<footer class="w3-container w3-theme-d3 w3-padding-16">
+<footer class="w3-container w3-theme-d3 w3-padding-16 ng-hide" ng-hide="logged_in">
   <h5>Footer</h5>
 </footer>
 
-<footer class="w3-container w3-theme-d5">
+<footer class="w3-container w3-theme-d5 ng-hide" ng-hide="logged_in">
   <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
 </footer>
+
+</div>
+
+</div>
  
 <script>
 // Accordion
@@ -384,6 +430,68 @@ function openNav() {
   }
 }
 </script>
+
+<script>
+var API_DOMAIN = "http://127.0.0.1:8001/";
+var API_ROOT = new URL('api/scavenger_hunt/', API_DOMAIN);
+var app = angular.module("scavenger_hunt", ['ngCookies']);
+function join_url_params(url, params){ return url +"?"+ params }
+
+app.controller('ExampleController', ['$cookies', function($cookies) {
+  // Retrieving a cookie
+  debugger;
+  var favoriteCookie = $cookies.get('myFavorite');
+  // Setting a cookie
+  $cookies.put('myFavorite', 'oatmeal');
+}]);
+
+app.controller("scavenger_hunt_Ctrl", function($scope, $http) {
+ 
+    $scope.uiColors = [
+        "bg-blue-1",
+        "bg-blue-2",
+        "bg-blue-3",
+        "bg-blue-4",
+        "bg-green-1",
+        "bg-green-2",
+        "bg-green-3",
+        "bg-green-4"
+    ];
+    $scope.colorGen = function(){
+          return LCARS.colorGen($scope.uiColors)
+    };
+    
+    url = new URL('avatar/',API_ROOT);
+    const params = new URLSearchParams([["format", "json"]]);;
+    url = join_url_params(url.toString(),params.toString());
+
+    $http.get(url).then(
+    function(response) {
+        $scope.logged_in = Boolean(response.data.count);
+    },
+    function(data) {
+        // Handle error here
+    })
+//    debugger;
+    $scope.login = function(){
+//        debugger;
+        //location.href = "http://localhost:8001/login/facebook/";
+
+        //location.reload();
+
+   //     $http.get("http://localhost:8001/login/facebook/").then(function(response) {
+   //       debugger;
+   //     },function(data) {
+          // Handle error here
+   //       debugger;
+
+   //     });
+
+    }
+});
+
+</script>
+
 
 </body>
 
