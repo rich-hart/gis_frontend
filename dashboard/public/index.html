@@ -47,34 +47,11 @@
 
 <body ontouchstart="" onload="main()" style="overflow:scroll">
 
-<script>
-var app = angular.module("scavenger_hunt", []);
-function join_urls(path_1, path_2){ return path_1 + path_2 }
-app.controller("scavenger_hunt_Ctrl", function($scope) {
+      <div id="bracket_32" style="margin-top:40px;">
+          <a href="http://localhost:8001/login/facebook/">
+          <div class="button pill {{colorGen()}}" id="button_41" data-label="LOGIN" style="text-align:right;"></div></a>
+      </div>
 
-    var temp_api_root = "http://127.0.0.1:8000/api/scavenger_hunt/";
-    var API_ROOT = temp_api_root;
-    $scope.uiColors = [
-        "bg-blue-1",
-        "bg-blue-2",
-        "bg-blue-3",
-        "bg-blue-4",
-        "bg-green-1",
-        "bg-green-2",
-        "bg-green-3",
-        "bg-green-4"
-    ];
-    $scope.colorGen = function(){
-          return LCARS.colorGen($scope.uiColors)
-    };
-    
-    url = join_urls(API_ROOT,'challenges/');
-//    $http.get(url).then(function(response) {
-//        $scope.challenges = response.data['results'];
-//    });
-});
-
-</script>
 
 <!-- Navbar -->
 <div class="w3-top">
@@ -384,6 +361,56 @@ function openNav() {
   }
 }
 </script>
+
+<script>
+var API_DOMAIN = "http://127.0.0.1:8001/";
+var API_ROOT = new URL('api/scavenger_hunt/', API_DOMAIN);
+var app = angular.module("scavenger_hunt", []);
+function join_url_params(url, params){ return url +"?"+ params }
+app.controller("scavenger_hunt_Ctrl", function($scope,$http) {
+
+//    var temp_api_root = "http://127.0.0.1:8000/api/scavenger_hunt/";
+//    var API_ROOT = temp_api_root;
+    $scope.uiColors = [
+        "bg-blue-1",
+        "bg-blue-2",
+        "bg-blue-3",
+        "bg-blue-4",
+        "bg-green-1",
+        "bg-green-2",
+        "bg-green-3",
+        "bg-green-4"
+    ];
+    $scope.colorGen = function(){
+          return LCARS.colorGen($scope.uiColors)
+    };
+    
+//    url = join_urls(API_ROOT,'challenges/');
+//    $http.get(url).then(function(response) {
+//        $scope.challenges = response.data['results'];
+//    });
+    debugger;
+    API_ROOT = '/api/scavenger_hunt/'
+
+//    url = new URL('avatar/',API_ROOT);
+//    const params = new URLSearchParams([["format", "json"]]);;
+//    url = join_url_params(url.toString(),params.toString());
+const httpOptions = {
+  headers:{ 'Content-Type': 'application/json','Access-Control-Allow-Credentials': true },
+  withCredentials: true //this is required so that Angular returns the Cookies received from the server. The server sends cookies in Set-Cookie header. Without this, Angular will ignore the Set-Cookie header
+};
+    $http.get('/api/scavenger_hunt/avatar').then(
+    function(response) {
+        debugger;
+        $scope.logged_in = Boolean(response.data.count);
+    },
+    function(data) {
+        debugger;
+    
+    });
+});
+</script>
+
 
 </body>
 
