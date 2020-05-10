@@ -116,10 +116,15 @@
               </a>
             </div>
           </div>
-          <br>
           <!-- Accordion -->
           <div class="w3-card w3-round" ng-if="logged_in">
-            <div class="w3-white">
+            <div class="w3-black button-wrap">
+               <div class="button {{colorGen()}}"  onclick="myFunction('Challenges')" data-label="Challenges"></div>          
+                <div id="Challenges" class="w3-hide w3-container"> 
+                  <div ng-repeat="challenge in challenges">
+                    <div class="button {{colorGen()}} pill" data-label="Challenge {{challenge.id}}" style="text-align:right"></div>
+                  </div>
+                </div>
               <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> My Groups</button>
               <div id="Demo1" class="w3-hide w3-container">
                 <p>Some text..</p>
@@ -339,18 +344,26 @@
           $scope.colorGen = function(){
                 return LCARS.colorGen($scope.uiColors)
           };
-          
+          debugger;         
           API_ROOT = '/api/scavenger_hunt/'
-      
-          $http.get('/api/scavenger_hunt/avatar').then(
+          var avatar_endpoint = API_ROOT + 'avatar';
+
+          $http.get(avatar_endpoint).then(
           function(response) {
               $scope.logged_in = Boolean(response.data.count);
               $scope.logged_out = !$scope.logged_in;
-              debugger;
           },
           function(data) {
-              debugger;
           
+          });
+          var challenge_endpoint = API_ROOT + 'challenges';
+
+          $http.get(challenge_endpoint).then(
+          function(response) {
+              $scope.challenges = response.data.results;
+          },
+          function(data) {
+              debugger; 
           });
       });
     </script>
