@@ -119,12 +119,20 @@
           <!-- Accordion -->
           <div class="w3-card w3-round" ng-if="logged_in">
             <div class="w3-black button-wrap">
-               <div class="button {{colorGen()}}"  onclick="myFunction('Challenges')" data-label="Challenges"></div>          
-                <div id="Challenges" class="w3-hide w3-container"> 
+               <div class="button {{colorGen()}}"  onclick="myFunction('challenges')" data-label="Challenges"></div>          
+                <div id="challenges" class="w3-hide w3-container"> 
                   <div ng-repeat="challenge in challenges">
                     <div class="button {{colorGen()}} pill" data-label="Challenge {{challenge.id}}" style="text-align:right"></div>
                   </div>
                 </div>
+
+               <div class="button {{colorGen()}}"  onclick="myFunction('completed_challenges')" data-label="Completed Challenges"></div>          
+                <div id="completed_challenges" class="w3-hide w3-container"> 
+                  <div ng-repeat="challenge in completed_challenges">
+                    <div class="button {{colorGen()}} pill" data-label="Challenge {{challenge.id}} (Complete)" style="text-align:right"></div>
+                  </div>
+                </div>
+
               <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> My Groups</button>
               <div id="Demo1" class="w3-hide w3-container">
                 <p>Some text..</p>
@@ -365,6 +373,17 @@
           function(data) {
               debugger; 
           });
+
+          var completed_challenge_endpoint = API_ROOT + 'completed_challenges';
+
+          $http.get(completed_challenge_endpoint).then(
+          function(response) {
+              $scope.completed_challenges = response.data.results;
+          },
+          function(data) {
+              debugger; 
+          });
+
       });
     </script>
   </body>
