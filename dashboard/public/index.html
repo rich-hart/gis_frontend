@@ -34,6 +34,26 @@
     <script type="text/javascript" src="main.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+
+<style> 
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  background-color: black;
+  color: white;
+  text-align: center;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: gray;
+  opacity: 1; /* Firefox */
+}
+
+</style>
+
   </head>
   <body ontouchstart="" onload="main()" style="overflow:scroll">
     <div ng-app="scavenger_hunt" ng-controller="scavenger_hunt_Ctrl">
@@ -145,12 +165,6 @@
                     <div class="button {{colorGen()}} pill" data-label="Challenge {{challenge.id}}" style="text-align:right" ng-click="showElement('challenge_'+challenge.id.toString())"></div>
                     <div id="challenge_{{challenge.id}}" class="w3-hide w3-container">
                       <div>
-                        <div class="row header flexh" id="row_333">
-                          <div class="cap medium left bg-" id="cap_334"></div>
-                          <div id="title_335" class="title half">CHALLENGE {{challenge.id}}</div>
-                          <div class="bar flexch bg-" id="bar_336"></div>
-                          <div class="cap medium right bg-" id="cap_337"></div>
-                        </div>
                         <div ng-if="challenge.problem.question.picture">
                           <img src="{{challenge.problem.question.picture}}">
                         </div>
@@ -164,7 +178,7 @@
                             {{challenge.problem.question.text}}
                           </p>
                         </div>
-                        <input id="answer_{{challenge.id}}" type="text" name="answer" placeholder="{{challenge.problem.answer}}">
+                        <input id="answer_{{challenge.id}}" type="text" name="answer" placeholder="{{challenge.answer}}">
                         <div class="row footer flexh" id="row_339">
                           <div class="cap medium left bg-" id="cap_340"></div>
                           <div class="bar flexch bg-" id="bar_341"></div>
@@ -189,99 +203,7 @@
               </div>
             </div>
 
-                <div class="w3-card w3-round w3-black">
-                  <div class="w3-container w3-padding">
-                    <div ng-repeat="challenge in challenges">
-                      <br>
-                      <form action="/api/scavenger_hunt/challenges/1/solve/?next=/lcars/&amp;format=json" method="POST">
-                        <input type="hidden" name="csrfmiddlewaretoken" value="{{csrfToken()}}">
-                        <div class="row header flexh" id="row_333">
-                          <div class="cap medium left bg-" id="cap_334"></div>
-                          <div id="title_335" class="title half">CHALLENGE {{challenge.id}}</div>
-                          <div class="bar flexch bg-" id="bar_336"></div>
-                          <div class="cap medium right bg-" id="cap_337"></div>
-                        </div>
-                        <div ng-if="challenge.problem.question.picture">
-                          <img src="{{challenge.problem.question.picture}}">
-                        </div>
-                        <div ng-if="challenge.problem.question.video">
-                          <video width="320" height="240" class="center" controls="">
-                            <source src="{{challenge.problem.question.video}}" type="video/mp4">
-                          </video>
-                        </div>
-                        <div class="content flexcv" id="content_338">
-                          <p id="htmlTag_345" class="htmlTag text-blue-2" style="text-align: center">
-                            {{challenge.problem.question.text}}
-                          </p>
-                        </div>
-                        <input type="text" name="answer" placeholder="{{challenge.problem.answer}}">
-                        <div class="row footer flexh" id="row_339">
-                          <div class="cap medium left bg-" id="cap_340"></div>
-                          <div class="bar flexch bg-" id="bar_341"></div>
-                          <button type="submit" class="btn btn-primary js-tooltip">
-                            <div id="title_342" class="title half bg-">
-                              <div type="submit" class="button bg-red-4">SUBMIT</div>
-                            </div>
-                          </button>
-                          <div class="cap medium right bg-" id="cap_343"></div>
-                        </div>
-                        <br>
-                      </form>
-                      <br>
-                    </div>
-                  </div>
-                </div>
-                <div class="w3-card w3-round w3-white">
-                  <div class="w3-container w3-padding">
-                    <h6 class="w3-opacity">Social Media template by w3.css</h6>
-                    <p contenteditable="true" class="w3-border w3-padding">Status: Feeling Blue</p>
-                    <button type="button" class="w3-button w3-theme"><i class="fa fa-pencil"></i>  Post</button> 
-                  </div>
-                </div>
               </div>
-            </div>
-            <div class="w3-container w3-card w3-white w3-round w3-margin">
-              <br>
-              <img src="/w3images/avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-              <span class="w3-right w3-opacity">1 min</span>
-              <h4>John Doe</h4>
-              <br>
-              <hr class="w3-clear">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-              <div class="w3-row-padding" style="margin:0 -16px">
-                <div class="w3-half">
-                  <img src="/w3images/lights.jpg" style="width:100%" alt="Northern Lights" class="w3-margin-bottom">
-                </div>
-                <div class="w3-half">
-                  <img src="/w3images/nature.jpg" style="width:100%" alt="Nature" class="w3-margin-bottom">
-                </div>
-              </div>
-              <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like</button> 
-              <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i>  Comment</button> 
-            </div>
-            <div class="w3-container w3-card w3-white w3-round w3-margin">
-              <br>
-              <img src="/w3images/avatar5.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-              <span class="w3-right w3-opacity">16 min</span>
-              <h4>Jane Doe</h4>
-              <br>
-              <hr class="w3-clear">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-              <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like</button> 
-              <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i>  Comment</button> 
-            </div>
-            <div class="w3-container w3-card w3-white w3-round w3-margin">
-              <br>
-              <img src="/w3images/avatar6.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-              <span class="w3-right w3-opacity">32 min</span>
-              <h4>Angie Jane</h4>
-              <br>
-              <hr class="w3-clear">
-              <p>Have you seen this?</p>
-              <img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-              <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like</button> 
-              <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i>  Comment</button> 
             </div>
             <!-- End Middle Column -->
           </div>
