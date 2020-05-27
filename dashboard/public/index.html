@@ -144,8 +144,7 @@
                   <div ng-repeat="challenge in challenges">
                     <div class="button {{colorGen()}} pill" data-label="Challenge {{challenge.id}}" style="text-align:right" ng-click="showElement('challenge_'+challenge.id.toString())"></div>
                     <div id="challenge_{{challenge.id}}" class="w3-hide w3-container">
-                      <form action="/api/scavenger_hunt/challenges/1/solve/?next=/lcars/&amp;format=json" method="POST">
-                        <input type="hidden" name="csrfmiddlewaretoken" value="NZgvuglxPyZi5vaOt0dRB2o6yTMvwpTh59WJuyhKnXpjQh8n4KKQgtidnId6O6V1">
+                      <div>
                         <div class="row header flexh" id="row_333">
                           <div class="cap medium left bg-" id="cap_334"></div>
                           <div id="title_335" class="title half">CHALLENGE {{challenge.id}}</div>
@@ -165,19 +164,19 @@
                             {{challenge.problem.question.text}}
                           </p>
                         </div>
-                        <input type="text" name="answer" placeholder="{{challenge.problem.answer}}">
+                        <input id="answer_{{challenge.id}}" type="text" name="answer" placeholder="{{challenge.problem.answer}}">
                         <div class="row footer flexh" id="row_339">
                           <div class="cap medium left bg-" id="cap_340"></div>
                           <div class="bar flexch bg-" id="bar_341"></div>
-                          <button type="submit" class="btn btn-primary js-tooltip">
+                          <button ng-click="submitAnswer(challenge.id)" class="btn btn-primary js-tooltip">
                             <div id="title_342" class="title half bg-">
-                              <div type="submit" class="button bg-red-4">SUBMIT</div>
+                              <div ng-click="submit" class="button bg-red-4">SUBMIT</div>
                             </div>
                           </button>
                           <div class="cap medium right bg-" id="cap_343"></div>
                         </div>
                         <br>
-                      </form>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -195,7 +194,7 @@
                     <div ng-repeat="challenge in challenges">
                       <br>
                       <form action="/api/scavenger_hunt/challenges/1/solve/?next=/lcars/&amp;format=json" method="POST">
-                        <input type="hidden" name="csrfmiddlewaretoken" value="NZgvuglxPyZi5vaOt0dRB2o6yTMvwpTh59WJuyhKnXpjQh8n4KKQgtidnId6O6V1">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{csrfToken()}}">
                         <div class="row header flexh" id="row_333">
                           <div class="cap medium left bg-" id="cap_334"></div>
                           <div id="title_335" class="title half">CHALLENGE {{challenge.id}}</div>
@@ -365,8 +364,12 @@
       var API_ROOT = new URL('api/scavenger_hunt/', API_DOMAIN);
       var app = angular.module("scavenger_hunt", []);
       function join_url_params(url, params){ return url +"?"+ params }
-      app.controller("scavenger_hunt_Ctrl", function($scope,$http) {
-      
+      app.config(function($httpProvider) {
+$httpProvider.defaults.xsrfCookieName = 'csrftoken';
+$httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+//  $httpProvider.interceptors.push('testInterceptor');
+      }).controller("scavenger_hunt_Ctrl", function($scope,$http) {
+         debugger; 
       //    var temp_api_root = "http://127.0.0.1:8000/api/scavenger_hunt/";
       //    var API_ROOT = temp_api_root;
           $scope.uiColors = [
@@ -379,6 +382,7 @@
               "bg-green-3",
               "bg-green-4"
           ];
+          $scope.cookie = document.cookie.split('=')[1];
           $scope.colorGen = function(){
                 return LCARS.colorGen($scope.uiColors)
           };
@@ -443,6 +447,30 @@
           x.previousElementSibling.className.replace(" w3-theme-d1", "");
         }
       }
+
+
+      $scope.submitAnswer = function(id) {
+        debugger;
+        var answer_endpoint = API_ROOT + 'challenges/'+id.toString()+'/solve/?format=json'
+
+        var a = document.getElementById('answer_'+id.toString());
+        
+        data = {
+            'answer': a.value
+        }
+        $http.post(answer_endpoint,data).then(
+          function(response) {
+             debugger;               
+          },
+          function(data) {
+             debugger;
+          }
+        );
+
+
+
+      }
+
 
       
       });
