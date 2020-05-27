@@ -142,7 +142,43 @@
                 <div class="button {{colorGen()}}"  ng-click="showElement('challenges')" data-label="Challenges"></div>
                 <div id="challenges" class="w3-hide w3-container">
                   <div ng-repeat="challenge in challenges">
-                    <div class="button {{colorGen()}} pill" data-label="Challenge {{challenge.id}}" style="text-align:right"></div>
+                    <div class="button {{colorGen()}} pill" data-label="Challenge {{challenge.id}}" style="text-align:right" ng-click="showElement('challenge_'+challenge.id.toString())"></div>
+                    <div id="challenge_{{challenge.id}}" class="w3-hide w3-container">
+                      <form action="/api/scavenger_hunt/challenges/1/solve/?next=/lcars/&amp;format=json" method="POST">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="NZgvuglxPyZi5vaOt0dRB2o6yTMvwpTh59WJuyhKnXpjQh8n4KKQgtidnId6O6V1">
+                        <div class="row header flexh" id="row_333">
+                          <div class="cap medium left bg-" id="cap_334"></div>
+                          <div id="title_335" class="title half">CHALLENGE {{challenge.id}}</div>
+                          <div class="bar flexch bg-" id="bar_336"></div>
+                          <div class="cap medium right bg-" id="cap_337"></div>
+                        </div>
+                        <div ng-if="challenge.problem.question.picture">
+                          <img src="{{challenge.problem.question.picture}}">
+                        </div>
+                        <div ng-if="challenge.problem.question.video">
+                          <video width="320" height="240" class="center" controls="">
+                            <source src="{{challenge.problem.question.video}}" type="video/mp4">
+                          </video>
+                        </div>
+                        <div class="content flexcv" id="content_338">
+                          <p id="htmlTag_345" class="htmlTag text-blue-2" style="text-align: center">
+                            {{challenge.problem.question.text}}
+                          </p>
+                        </div>
+                        <input type="text" name="answer" placeholder="{{challenge.problem.answer}}">
+                        <div class="row footer flexh" id="row_339">
+                          <div class="cap medium left bg-" id="cap_340"></div>
+                          <div class="bar flexch bg-" id="bar_341"></div>
+                          <button type="submit" class="btn btn-primary js-tooltip">
+                            <div id="title_342" class="title half bg-">
+                              <div type="submit" class="button bg-red-4">SUBMIT</div>
+                            </div>
+                          </button>
+                          <div class="cap medium right bg-" id="cap_343"></div>
+                        </div>
+                        <br>
+                      </form>
+                    </div>
                   </div>
                 </div>
                 <div class="button {{colorGen()}}"  ng-click="showElement('completed_challenges')" data-label="Completed Challenges"></div>
@@ -346,7 +382,6 @@
           $scope.colorGen = function(){
                 return LCARS.colorGen($scope.uiColors)
           };
-          debugger;         
           API_ROOT = '/api/scavenger_hunt/'
           var avatar_endpoint = API_ROOT + 'avatar';
       
@@ -365,7 +400,6 @@
               $scope.challenges = response.data.results;
           },
           function(data) {
-              debugger; 
           });
       
           var completed_challenge_endpoint = API_ROOT + 'completed_challenges';
@@ -375,7 +409,6 @@
               $scope.completed_challenges = response.data.results;
           },
           function(data) {
-              debugger; 
           });
       
       
@@ -383,11 +416,9 @@
       
           $http.get(reward_endpoint).then(
           function(response) {
-              debugger;
               $scope.rewards = response.data.results;
           },
           function(data) {
-              debugger; 
           });
       
       
@@ -398,7 +429,6 @@
               $scope.awards = response.data.results;
           },
           function(data) {
-              debugger; 
           });
 
 
