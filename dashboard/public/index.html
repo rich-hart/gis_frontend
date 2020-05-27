@@ -116,18 +116,6 @@
             <!-- Accordion -->
             <div class="w3-card w3-round" ng-if="logged_in">
               <div class="w3-black button-wrap">
-                <div class="button {{colorGen()}}"  onclick="myFunction('challenges')" data-label="Challenges"></div>
-                <div id="challenges" class="w3-hide w3-container">
-                  <div ng-repeat="challenge in challenges">
-                    <div class="button {{colorGen()}} pill" data-label="Challenge {{challenge.id}}" style="text-align:right"></div>
-                  </div>
-                </div>
-                <div class="button {{colorGen()}}"  onclick="myFunction('completed_challenges')" data-label="Completed Challenges"></div>
-                <div id="completed_challenges" class="w3-hide w3-container">
-                  <div ng-repeat="challenge in completed_challenges">
-                    <div class="button {{colorGen()}} pill" data-label="Challenge {{challenge.id}} (Complete)" style="text-align:right"></div>
-                  </div>
-                </div>
                 <div class="button {{colorGen()}}"  onclick="myFunction('rewards')" data-label="Rewards"></div>
                 <div id="rewards" class="w3-hide w3-container">
                   <div ng-repeat="reward in rewards">
@@ -149,6 +137,23 @@
           <div class="w3-col m7" ng-if="logged_in">
             <div class="w3-row-padding">
               <div class="w3-col m12">
+            <div class="w3-card w3-round" ng-if="logged_in">
+              <div class="w3-black button-wrap">
+                <div class="button {{colorGen()}}"  onclick="myFunction('challenges')" data-label="Challenges"></div>
+                <div id="challenges" class="w3-hide w3-container">
+                  <div ng-repeat="challenge in challenges">
+                    <div class="button {{colorGen()}} pill" data-label="Challenge {{challenge.id}}" style="text-align:right"></div>
+                  </div>
+                </div>
+                <div class="button {{colorGen()}}"  onclick="myFunction('completed_challenges')" data-label="Completed Challenges"></div>
+                <div id="completed_challenges" class="w3-hide w3-container">
+                  <div ng-repeat="challenge in completed_challenges">
+                    <div class="button {{colorGen()}} pill" data-label="Challenge {{challenge.id}} (Complete)" style="text-align:right"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
                 <div class="w3-card w3-round w3-black">
                   <div class="w3-container w3-padding">
                     <div ng-repeat="challenge in challenges">
