@@ -11,9 +11,15 @@ app.use(express.static('./node_modules/particles'))
 app.use(
    '/api',
    createProxyMiddleware(
-      {target: 'http://127.0.0.1:8001/', changeOrigin:true})
+      {target: 'http://127.0.0.1:8001/', changeOrigin:true}
+   )
 )
-
+app.use(
+   '/accounts',
+   createProxyMiddleware(
+      {target: 'http://127.0.0.1:8001/', changeOrigin:true}
+   )
+)
 //app.get('/', (req, res) => {
 //  res.send('Hello World!')
 //});

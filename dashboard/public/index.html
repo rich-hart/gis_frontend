@@ -52,10 +52,36 @@ input[type=text] {
   opacity: 1; /* Firefox */
 }
 
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+div#banner { 
+  position: relative; 
+  top: 0; 
+  left: 0; 
+  background-color: #DDEEEE; 
+  width: 100%;
+  z-index: -1; 
+}
+div#banner-content { 
+  width: 800px; 
+  margin: 0 auto; 
+  padding: 10px; 
+  border: 1px solid #000;
+}
+
 </style>
 
   </head>
   <body ontouchstart="" onload="main()" style="overflow:scroll">
+  <div id="banner">
+    <div id="banner-content">
+    This is your banner text, centered and fixed at 800px in width
+    </div>
+  </div>
     <div ng-app="scavenger_hunt" ng-controller="scavenger_hunt_Ctrl">
       <!-- Page Container -->
       <div class="w3-container w3-content" style="max-width:1400px;margin-top:20px;">
@@ -65,7 +91,7 @@ input[type=text] {
           <div class="w3-col m3">
             <!-- Profile -->
             <div style="w3-card w3-black" ng-if="logged_in">
-              <a class="button pill {{colorGen()}}" data-label="LOGOUT" href="http://127.0.0.1:8001/api-auth/logout/?next=/api/scavenger_hunt/avatar/" syle="max-height:30px">
+              <a class="button pill {{colorGen()}}" data-label="LOGOUT" href="/accounts/logout/" syle="max-height:30px">
               </a>
             </div>
             <br>
@@ -160,15 +186,16 @@ input[type=text] {
             <div class="w3-card w3-round" ng-if="logged_in">
               <div class="w3-black button-wrap">
                 <div class="button {{colorGen()}}"  ng-click="showElement('challenges')" data-label="Challenges"></div>
+
                 <div id="challenges" class="w3-hide w3-container">
                   <div ng-repeat="challenge in challenges">
-                    <div class="button {{colorGen()}} pill" data-label="Challenge {{challenge.id}}" style="text-align:right" ng-click="showElement('challenge_'+challenge.id.toString())"></div>
+                    <div class="bar {{colorGen()}}" data-label="Challenge {{challenge.id}}" style="text-align:right;margin-bottom:5px" ng-click="showElement('challenge_'+challenge.id.toString())"></div>
                     <div id="challenge_{{challenge.id}}" class="w3-hide w3-container">
                       <div>
-                        <div ng-if="challenge.problem.question.picture">
-                          <img src="{{challenge.problem.question.picture}}">
+                        <div ng-if="challenge.problem.question.picture" style="text-align: center;">
+                          <img src="{{challenge.problem.question.picture}}" class="center">
                         </div>
-                        <div ng-if="challenge.problem.question.video">
+                        <div ng-if="challenge.problem.question.video" style="text-align: center;">
                           <video width="320" height="240" class="center" controls="">
                             <source src="{{challenge.problem.question.video}}" type="video/mp4">
                           </video>
@@ -177,17 +204,11 @@ input[type=text] {
                           <p id="htmlTag_345" class="htmlTag text-blue-2" style="text-align: center">
                             {{challenge.problem.question.text}}
                           </p>
+                        <div class="row" style="max-height:30px" id="row_339">
+                          <input id="answer_{{challenge.id}}" type="text" name="answer" placeholder="{{challenge.answer}}">
+                          <div style='text-align:center;margin-top:10px;margin-right:20px;position:relative' ng-click="submitAnswer(challenge.id)" class="oval {{colorGen()}} small" id="button_2315" data-label="submit"></div>
                         </div>
-                        <input id="answer_{{challenge.id}}" type="text" name="answer" placeholder="{{challenge.answer}}">
-                        <div class="row footer flexh" id="row_339">
-                          <div class="cap medium left bg-" id="cap_340"></div>
-                          <div class="bar flexch bg-" id="bar_341"></div>
-                          <button ng-click="submitAnswer(challenge.id)" class="btn btn-primary js-tooltip">
-                            <div id="title_342" class="title half bg-">
-                              <div ng-click="submit" class="button bg-red-4">SUBMIT</div>
-                            </div>
-                          </button>
-                          <div class="cap medium right bg-" id="cap_343"></div>
+
                         </div>
                         <br>
                       </div>
@@ -282,8 +303,7 @@ input[type=text] {
       }
     </script>
     <script>
-      var API_DOMAIN = "http://127.0.0.1:8001/";
-      var API_ROOT = new URL('api/scavenger_hunt/', API_DOMAIN);
+      var API_ROOT = "/api/"
       var app = angular.module("scavenger_hunt", []);
       function join_url_params(url, params){ return url +"?"+ params }
       app.config(function($httpProvider) {
@@ -308,8 +328,8 @@ $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
           $scope.colorGen = function(){
                 return LCARS.colorGen($scope.uiColors)
           };
-          API_ROOT = '/api/scavenger_hunt/'
-          var avatar_endpoint = API_ROOT + 'avatar';
+          API_ROOT = '/api/'
+          var avatar_endpoint = API_ROOT + 'profile?format=json';
       
           $http.get(avatar_endpoint).then(
           function(response) {
@@ -319,7 +339,7 @@ $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
           function(data) {
           
           });
-          var challenge_endpoint = API_ROOT + 'challenges';
+          var challenge_endpoint = API_ROOT + 'challenges/unsolved/?format=json';
       
           $http.get(challenge_endpoint).then(
           function(response) {
@@ -328,7 +348,7 @@ $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
           function(data) {
           });
       
-          var completed_challenge_endpoint = API_ROOT + 'completed_challenges';
+          var completed_challenge_endpoint = API_ROOT + 'challenges/solved?format=json';
       
           $http.get(completed_challenge_endpoint).then(
           function(response) {
@@ -338,7 +358,7 @@ $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
           });
       
       
-          var reward_endpoint = API_ROOT + 'rewards';
+          var reward_endpoint = API_ROOT + 'rewards/?format=json';
       
           $http.get(reward_endpoint).then(
           function(response) {
@@ -348,7 +368,7 @@ $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
           });
       
       
-          var award_endpoint = API_ROOT + 'awards';
+          var award_endpoint = API_ROOT + 'awards/?format=json';
       
           $http.get(award_endpoint).then(
           function(response) {
@@ -382,7 +402,30 @@ $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
         }
         $http.post(answer_endpoint,data).then(
           function(response) {
-             debugger;               
+             debugger;
+             var banner = document.getElementById("banner");
+             var view_port = document.getElementById("bracket_32");
+             if (response.data.state=='penalty'){
+                 if(response.data.penalty=='general'){
+                     debugger;
+                   if(view_port.classList.contains('red-alert')){
+                     red_alert()
+                   }               
+                 } else if (response.data.penalty=='yellow'){
+                     debugger;
+                   if(view_port.classList.contains('red-alert')){
+                     red_alert()
+                   }
+                 } else if (response.data.penalty=='red') {
+                     debugger;
+                   if(!view_port.classList.contains('red-alert')){
+                     red_alert()
+                   }
+                 }
+             } else if (response.data.state=='solved'){ 
+                 banner.style.display = 'none'
+                     debugger;
+             }               
           },
           function(data) {
              debugger;
