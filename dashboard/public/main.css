@@ -1,0 +1,38 @@
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  background-color: black;
+  color: white;
+  text-align: center;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: gray;
+  opacity: 1; /* Firefox */
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+div#banner { 
+     width:100%;
+     position: fixed;
+     z-index: 1; 
+     background: #000000;
+     height: 20px;
+     color: #FFFFFF;
+     font-size: 12px;
+     padding:5px; 
+}
+div#banner-content { 
+  width: 800px; 
+  margin: 0 auto; 
+  padding: 10px; 
+  border: 1px solid #000;
+}

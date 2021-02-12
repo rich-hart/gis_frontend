@@ -61,4 +61,171 @@ for (idx in bracket_ids) {
   var banner = document.getElementById('banner');
   banner.style.display = 'none';
 };
+      var API_ROOT = "/api/"
+      var app = angular.module("scavenger_hunt", []);
+      function join_url_params(url, params){ return url +"?"+ params }
+      app.config(function($httpProvider) {
+$httpProvider.defaults.xsrfCookieName = 'csrftoken';
+$httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+//  $httpProvider.interceptors.push('testInterceptor');
+      }).controller("scavenger_hunt_Ctrl", function($scope,$http) {
+         debugger; 
+      //    var temp_api_root = "http://127.0.0.1:8000/api/scavenger_hunt/";
+      //    var API_ROOT = temp_api_root;
+          $scope.uiColors = [
+              "bg-blue-1",
+              "bg-blue-2",
+              "bg-blue-3",
+              "bg-blue-4",
+              "bg-green-1",
+              "bg-green-2",
+              "bg-green-3",
+              "bg-green-4"
+          ];
+          $scope.cookie = document.cookie.split('=')[1];
+          $scope.colorGen = function(){
+                return LCARS.colorGen($scope.uiColors)
+          };
+          API_ROOT = '/api/'
+          var avatar_endpoint = API_ROOT + 'profile?format=json';
+      
+          $http.get(avatar_endpoint).then(
+          function(response) {
+              $scope.logged_in = Boolean(response.data.count);
+              $scope.logged_out = !$scope.logged_in;
+          },
+          function(data) {
+          
+          });
+          var challenge_endpoint = API_ROOT + 'challenges/unsolved/?format=json';
+      
+          $http.get(challenge_endpoint).then(
+          function(response) {
+              $scope.challenges = response.data.results;
+          },
+          function(data) {
+          });
+      
+          var completed_challenge_endpoint = API_ROOT + 'challenges/solved?format=json';
+      
+          $http.get(completed_challenge_endpoint).then(
+          function(response) {
+              $scope.completed_challenges = response.data.results;
+          },
+          function(data) {
+          });
+      
+      
+          var reward_endpoint = API_ROOT + 'rewards/?format=json';
+      
+          $http.get(reward_endpoint).then(
+          function(response) {
+              $scope.rewards = response.data.results;
+          },
+          function(data) {
+          });
+      
+      
+          var award_endpoint = API_ROOT + 'awards/?format=json';
+      
+          $http.get(award_endpoint).then(
+          function(response) {
+              $scope.awards = response.data.results;
+          },
+          function(data) {
+          });
+
+
+      $scope.showElement = function(id) {
+        var x = document.getElementById(id);
+        if (x.className.indexOf("w3-show") == -1) {
+          x.className += " w3-show";
+          x.previousElementSibling.className += " w3-theme-d1";
+        } else { 
+          x.className = x.className.replace("w3-show", "");
+          x.previousElementSibling.className = 
+          x.previousElementSibling.className.replace(" w3-theme-d1", "");
+        }
+      }
+
+
+
+      $scope.submitAnswer = function(id) {
+        debugger;
+        var answer_endpoint = API_ROOT + 'challenges/'+id.toString()+'/solve/?format=json'
+
+        var a = document.getElementById('answer_'+id.toString());
+        
+        data = {
+            'answer': a.value
+        }
+        $http.post(answer_endpoint,data).then(
+          function(response) {
+             debugger;
+             var banner = document.getElementById("banner");
+             var banner_content = document.getElementById("banner-content");
+
+             var view_port = document.getElementById("bracket_32");
+             banner_content.innerText = response.data.msg;
+             banner.style.display = 'block';
+
+             if (response.data.state=='penalty'){
+                 if(response.data.penalty=='general'){
+                    debugger;
+                   if(view_port.classList.contains('red-alert')){
+                     red_alert()
+                   }               
+                 } else if (response.data.penalty=='yellow'){
+                   debugger;
+                   if(view_port.classList.contains('red-alert')){
+                     red_alert()
+                   }
+                 } else if (response.data.penalty=='red') {
+                     debugger;
+                   if(!view_port.classList.contains('red-alert')){
+                     red_alert()
+                   }
+                 }
+             } else if (response.data.state=='solved'){ 
+                     debugger;
+             }               
+          },
+          function(data) {
+             debugger;
+          }
+        );
+
+      setTimeout(function() {
+           var banner = document.getElementById("banner");
+           banner.style.display = 'none';
+       }, 7000); // <-- time in milliseconds
+
+      }
+
+
+      
+      });
+
+      // Accordion
+      function myFunction(id) {
+        var x = document.getElementById(id);
+        if (x.className.indexOf("w3-show") == -1) {
+          x.className += " w3-show";
+          x.previousElementSibling.className += " w3-theme-d1";
+        } else { 
+          x.className = x.className.replace("w3-show", "");
+          x.previousElementSibling.className = 
+          x.previousElementSibling.className.replace(" w3-theme-d1", "");
+        }
+      }
+      
+      // Used to toggle the menu on smaller screens when clicking on the menu button
+      function openNav() {
+        var x = document.getElementById("navDemo");
+        if (x.className.indexOf("w3-show") == -1) {
+          x.className += " w3-show";
+        } else { 
+          x.className = x.className.replace(" w3-show", "");
+        }
+      }
 
