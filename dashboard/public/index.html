@@ -34,6 +34,7 @@
     <script type="text/javascript" src="main.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <style> 
 input[type=text] {
@@ -59,12 +60,14 @@ input[type=text] {
   width: 50%;
 }
 div#banner { 
-  position: relative; 
-  top: 0; 
-  left: 0; 
-  background-color: #DDEEEE; 
-  width: 100%;
-  z-index: -1; 
+     width:100%;
+     position: fixed;
+     z-index: 100; 
+     background: #000000;
+     height: 20px;
+     color: #FFFFFF;
+     font-size: 12px;
+     padding:5px; 
 }
 div#banner-content { 
   width: 800px; 
@@ -78,9 +81,7 @@ div#banner-content {
   </head>
   <body ontouchstart="" onload="main()" style="overflow:scroll">
   <div id="banner">
-    <div id="banner-content">
-    This is your banner text, centered and fixed at 800px in width
-    </div>
+    <div id="banner-content"></div>
   </div>
     <div ng-app="scavenger_hunt" ng-controller="scavenger_hunt_Ctrl">
       <!-- Page Container -->
@@ -192,7 +193,7 @@ div#banner-content {
                     <div class="bar {{colorGen()}}" data-label="Challenge {{challenge.id}}" style="text-align:right;margin-bottom:5px" ng-click="showElement('challenge_'+challenge.id.toString())"></div>
                     <div id="challenge_{{challenge.id}}" class="w3-hide w3-container">
                       <div>
-                        <div ng-if="challenge.problem.question.picture" style="text-align: center;">
+                        <div ng-if="{{challenge.problem.question.picture}}" style="text-align: center;">
                           <img src="{{challenge.problem.question.picture}}" class="center">
                         </div>
                         <div ng-if="challenge.problem.question.video" style="text-align: center;">
@@ -391,6 +392,7 @@ $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
       }
 
 
+
       $scope.submitAnswer = function(id) {
         debugger;
         var answer_endpoint = API_ROOT + 'challenges/'+id.toString()+'/solve/?format=json'
@@ -404,15 +406,20 @@ $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
           function(response) {
              debugger;
              var banner = document.getElementById("banner");
+             var banner_content = document.getElementById("banner-content");
+
              var view_port = document.getElementById("bracket_32");
+             banner_content.innerText = response.data.msg;
+             banner.style.display = 'block';
+
              if (response.data.state=='penalty'){
                  if(response.data.penalty=='general'){
-                     debugger;
+                    debugger;
                    if(view_port.classList.contains('red-alert')){
                      red_alert()
                    }               
                  } else if (response.data.penalty=='yellow'){
-                     debugger;
+                   debugger;
                    if(view_port.classList.contains('red-alert')){
                      red_alert()
                    }
@@ -423,7 +430,6 @@ $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
                    }
                  }
              } else if (response.data.state=='solved'){ 
-                 banner.style.display = 'none'
                      debugger;
              }               
           },
@@ -432,7 +438,10 @@ $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
           }
         );
 
-
+      setTimeout(function() {
+           var banner = document.getElementById("banner");
+           banner.style.display = 'none';
+       }, 7000); // <-- time in milliseconds
 
       }
 

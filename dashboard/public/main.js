@@ -58,5 +58,7 @@ for (idx in bracket_ids) {
 //    }
 //  }
 };
+  var banner = document.getElementById('banner');
+  banner.style.display = 'none';
 };
 
