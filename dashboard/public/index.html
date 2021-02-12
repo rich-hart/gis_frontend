@@ -123,16 +123,15 @@
             <!-- Accordion -->
             <div class="w3-card w3-round" ng-if="logged_in">
               <div class="w3-black button-wrap">
-                <div class="button {{colorGen()}}"  onclick="myFunction('rewards')" data-label="Rewards"></div>
-                <div id="rewards" class="w3-hide w3-container">
-                  <div ng-repeat="reward in rewards">
-                    <div class="button {{colorGen()}} pill" data-label="Reward" style="text-align:right"></div>
-                  </div>
-                </div>
                 <div class="button {{colorGen()}}"  onclick="myFunction('awards')" data-label="Awards"></div>
-                <div id="rewards" class="w3-hide w3-container">
+                <br>
+                <div id="awards" class="w3-hide w3-container">
                   <div ng-repeat="award in awards">
-                    <div class="button {{colorGen()}} pill" data-label="Award" style="text-align:right"></div>
+                    <div class="button {{colorGen()}} pill" data-label="Award" style="text-align:right" ng-click="showElement('award_'+award.id.toString())"></div>
+                    <br>
+                    <div id="award_{{award.id}}" class="w3-hide w3-container">
+                        <p>{{award.reward.description}}</p>
+                    </div>
                   </div>
                 </div>
               </div>
