@@ -164,12 +164,14 @@
                           <p id="htmlTag_345" class="htmlTag text-blue-2" style="text-align: center">
                             {{challenge.problem.question.text}}
                           </p>
+                        </div>
                         <div class="row" style="max-height:30px" id="row_339">
                           <input id="answer_{{challenge.id}}" type="text" name="answer" placeholder="{{challenge.answer}}">
-                          <div style='text-align:center;margin-top:10px;margin-right:20px;position:relative' ng-click="submitAnswer(challenge.id)" class="oval {{colorGen()}} small" id="button_2315" data-label="submit"></div>
+                          <div style='text-align:center;margin-top:10px;margin-right:20px;position:relative' ng-click="submitAnswer(challenge.id)" class="oval {{colorGen()}} small" id="button_2315" data-label="submit">
+                          </div>
                         </div>
 
-                        </div>
+
                         <br>
                       </div>
                     </div>
@@ -178,7 +180,30 @@
                 <div class="button {{colorGen()}}"  ng-click="showElement('completed_challenges')" data-label="Completed Challenges"></div>
                 <div id="completed_challenges" class="w3-hide w3-container">
                   <div ng-repeat="challenge in completed_challenges">
-                    <div class="bar {{colorGen()}}" data-label="Challenge {{challenge.id}} (Complete)" style="text-align:right;margin-bottom:5px"></div>
+                    <div class="bar {{colorGen()}}" data-label="Challenge {{challenge.id}}" style="text-align:right;margin-bottom:5px" ng-click="showElement('challenge_'+challenge.id.toString())"></div>
+                    <div id="challenge_{{challenge.id}}" class="w3-hide w3-container">
+                      <div>
+                        <div ng-if="{{challenge.problem.question.picture}}" style="text-align: center;">
+                          <img src="{{challenge.problem.question.picture}}" class="center">
+                        </div>
+                        <div ng-if="challenge.problem.question.video" style="text-align: center;">
+                          <video width="320" height="240" class="center" controls="">
+                            <source src="{{challenge.problem.question.video}}" type="video/mp4">
+                          </video>
+                        </div>
+                        <div class="content flexcv" id="content_338">
+                          <p id="htmlTag_345" class="htmlTag text-blue-2" style="text-align: center">
+                            {{challenge.problem.question.text}}
+                          </p>
+                        </div>
+                        <div class="row" style="max-height:30px" id="row_339">
+                          <p id="htmlTag_3456" class="htmlTag text-blue-2" style="text-align: center">
+                            {{challenge.solution.answer.text}}
+                          </p>
+                        </div>
+                        <br>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
