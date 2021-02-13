@@ -4,4 +4,4 @@ workdir /app
 
 copy dashboard .
 
-cmd node index.js
+cmd node dev.js
