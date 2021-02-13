@@ -123,12 +123,12 @@
             <!-- Accordion -->
             <div class="w3-card w3-round" ng-if="logged_in">
               <div class="w3-black button-wrap">
-                <div class="button {{colorGen()}}"  onclick="myFunction('awards')" data-label="Awards"></div>
-                <br>
+                <div class="button {{colorGen()}}"  onclick="myFunction('awards')" data-label="Awards" style="margin-bottom:5px"></div>
+
                 <div id="awards" class="w3-hide w3-container">
                   <div ng-repeat="award in awards">
-                    <div class="button {{colorGen()}} pill" data-label="Award" style="text-align:right" ng-click="showElement('award_'+award.id.toString())"></div>
-                    <br>
+                    <div class="bar {{colorGen()}}" data-label="Award" style="text-align:right;margin-bottom:5px" ng-click="showElement('award_'+award.id.toString())"></div>
+
                     <div id="award_{{award.id}}" class="w3-hide w3-container">
                         <p>{{award.reward.description}}</p>
                     </div>
@@ -178,7 +178,7 @@
                 <div class="button {{colorGen()}}"  ng-click="showElement('completed_challenges')" data-label="Completed Challenges"></div>
                 <div id="completed_challenges" class="w3-hide w3-container">
                   <div ng-repeat="challenge in completed_challenges">
-                    <div class="button {{colorGen()}} pill" data-label="Challenge {{challenge.id}} (Complete)" style="text-align:right"></div>
+                    <div class="bar {{colorGen()}}" data-label="Challenge {{challenge.id}} (Complete)" style="text-align:right;margin-bottom:5px"></div>
                   </div>
                 </div>
               </div>
