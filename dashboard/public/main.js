@@ -72,27 +72,24 @@ $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
          debugger; 
       //    var temp_api_root = "http://127.0.0.1:8000/api/scavenger_hunt/";
       //    var API_ROOT = temp_api_root;
-          $scope.uiColors = [
-              "bg-blue-1",
-              "bg-blue-2",
-              "bg-blue-3",
-              "bg-blue-4",
-              "bg-green-1",
-              "bg-green-2",
-              "bg-green-3",
-              "bg-green-4"
-          ];
+          API_ROOT = '/api/'
+          $scope.logged_in = false;
+          $scope.logged_out = true;
+          $scope.is_staff = false;
+          $scope.uiColors = uiColors;
           $scope.cookie = document.cookie.split('=')[1];
           $scope.colorGen = function(){
                 return LCARS.colorGen($scope.uiColors)
           };
-          API_ROOT = '/api/'
-          var avatar_endpoint = API_ROOT + 'profile?format=json';
+
+          var profile_endpoint = API_ROOT + 'profile?format=json';
       
-          $http.get(avatar_endpoint).then(
+          $http.get(profile_endpoint).then(
           function(response) {
+              debugger;
               $scope.logged_in = Boolean(response.data.count);
               $scope.logged_out = !$scope.logged_in;
+              $scope.is_staff = response.data.results[0].user.is_staff;
           },
           function(data) {
           
@@ -188,6 +185,9 @@ $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
                  }
              } else if (response.data.state=='solved'){ 
                      debugger;
+                     setTimeout(function() {
+                         location.reload();
+                     }, 10000); // <-- time in milliseconds
              }               
           },
           function(data) {
