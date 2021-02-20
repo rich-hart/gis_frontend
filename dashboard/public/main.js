@@ -112,7 +112,7 @@ app.config(function($httpProvider) {
     ping()
 
 
-    var challenge_endpoint = API_ROOT + 'challenges/unsolved/?format=json';
+    var challenge_endpoint = API_ROOT + 'challenges/player/?format=json';
 
     $http.get(challenge_endpoint).then(
         function(response) {
