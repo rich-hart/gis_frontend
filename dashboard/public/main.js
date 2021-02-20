@@ -47,12 +47,9 @@ function main() {
     for (idx in bracket_ids) {
         id = bracket_ids[idx];
         element = document.getElementById(id);
-        //  debugger;
         //  for (class_idx in element.classList){
         //    class_name = element.classList[class_idx];
-        //    debugger;
         //   if (uiColors.includes(class_name)){
-        //     debugger;
         //      element.classList.remove(class_name);
         //      element.classList.add(LCARS.colorGen(uiColors));
         //    }
@@ -72,7 +69,6 @@ app.config(function($httpProvider) {
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
     //  $httpProvider.interceptors.push('testInterceptor');
 }).controller("scavenger_hunt_Ctrl", function($scope, $http) {
-    debugger;
     //    var temp_api_root = "http://127.0.0.1:8000/api/scavenger_hunt/";
     //    var API_ROOT = temp_api_root;
     API_ROOT = '/api/'
@@ -89,7 +85,6 @@ app.config(function($httpProvider) {
 
     $http.get(profile_endpoint).then(
         function(response) {
-            debugger;
             $scope.logged_in = Boolean(response.data.count);
             $scope.logged_out = !$scope.logged_in;
             $scope.is_staff = response.data.results[0].user.is_staff;
@@ -102,14 +97,12 @@ app.config(function($httpProvider) {
     function ping(){
         $http.get(penalty_endpoint).then(
             function (response) {
-                debugger
-                if (Object.keys(response.data).length !== 0) {
-                debugger
-                    banner.style.display = 'block';
-                } else {
+                if (Object.keys(response.data).length == 0) {
                     banner.style.display = 'none';
+                } else {
+                    banner.style.display = 'block';
                 }
-                setTimeout(ping, 1000);
+                setTimeout(ping, 5000);
                 //$timeout(ping, 1000);
             },
             function(data) {

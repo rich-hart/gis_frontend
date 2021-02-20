@@ -40,11 +40,13 @@
 
   </head>
   <body ontouchstart="" onload="main()" style="overflow:scroll">
-  <div id="banner">
-    <div id="banner-content"></div>
-  </div>
+      <div id="banner" class="bg-blue-2">
+        <div id="banner-content"></div>
+      </div>
     <div ng-app="scavenger_hunt" ng-controller="scavenger_hunt_Ctrl">
       <!-- Page Container -->
+
+
       <div class="w3-container w3-content" style="max-width:1400px;margin-top:20px;">
         <!-- The Grid -->
         <div class="w3-row">
@@ -224,9 +226,9 @@
                 <img src="GIS_facebook_logo.jpg" alt="Forest" style="width:100%;">
                 <p><strong>Virtual Celebration</strong></p>
                 <p>Saturdays 8:00PM EST</p>
-                <p>
-                    <a href="https://www.facebook.com/gaaaysinspaaace/events/">
-                        <button class="w3-button w3-block w3-theme-l4">Info</button></p>
+                
+                    <a target="_blank" href="https://www.facebook.com/gaaaysinspaaace/events/">
+                        <button class="w3-button w3-block w3-theme-l4">Info</button>
                     </a>
               </div>
             </div>
@@ -237,9 +239,9 @@
                 <img src="the_delta_flyers_logo.jpg" alt="Forest" style="width:100%;">
                 <p><strong>New Episodes</strong></p>
                 <p>Sundays</p>
-                <p>
-                    <a href="https://the-delta-flyers.captivate.fm/">
-                        <button class="w3-button w3-block w3-theme-l4">Info</button></p>
+               
+                    <a target="_blank" href="https://the-delta-flyers.captivate.fm/">
+                        <button class="w3-button w3-block w3-theme-l4">Info</button>
                     </a>
               </div>
             </div>
@@ -255,7 +257,7 @@
       <br>
       <!-- Footer -->
       <footer class="w3-container w3-theme-d3 w3-padding-16" ng-if="logged_in">
-        <h5>Footer</h5>
+        <h5>Gaaays In Spaaace</h5>
       </footer>
       <footer class="w3-container w3-theme-d5" ng-if="logged_in">
         <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
