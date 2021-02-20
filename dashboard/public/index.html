@@ -159,7 +159,8 @@
                          ng-click="showElement('challenge_'+challenge.id.toString())"
                          ng-if="challenge.solution">
                     </div>
-                    <div class="bar {{colorGen()}}" 
+                    <div id="challenge_title_{{challenge.id}}"
+                         class="bar {{colorGen()}}" 
                          data-label="Challenge {{challenge.id}}" 
                          style="text-align:left;margin-bottom:5px"
                          ng-click="showElement('challenge_'+challenge.id.toString())"
@@ -187,9 +188,7 @@
                         </div>
 
                         <div class="row" style="max-height:30px" id="row_339" ng-if="!challenge.solution">
-                          <input id="answer_{{challenge.id}}" type="text" name="answer" placeholder="Answer">
-                          <div style='text-align:center;margin-top:10px;margin-right:20px;position:relative' ng-click="submitAnswer(challenge.id)" class="oval {{colorGen()}} small" id="button_2315" data-label="submit">
-                          </div>
+                          <input id="answer_{{challenge.id}}" type="text" name="answer" placeholder="Answer" press-enter="submitAnswer({{challenge.id}})">
                         </div>
 
 

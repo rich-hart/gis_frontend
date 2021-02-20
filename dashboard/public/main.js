@@ -64,6 +64,21 @@ var app = angular.module("scavenger_hunt", []);
 function join_url_params(url, params) {
     return url + "?" + params
 }
+
+app.directive('pressEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if(event.which === 13) {
+                scope.$apply(function (){
+                    scope.$eval(attrs.pressEnter);
+                });
+
+                event.preventDefault();
+            }
+        });
+    };
+});
+
 app.config(function($httpProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -162,17 +177,16 @@ app.config(function($httpProvider) {
 
 
     $scope.submitAnswer = function(id) {
-        debugger;
         var answer_endpoint = API_ROOT + 'challenges/' + id.toString() + '/solve/?format=json'
-
         var a = document.getElementById('answer_' + id.toString());
+        var challenge_title = document.getElementById("challenge_title_"+id.toString()) 
 
         data = {
             'answer': a.value
         }
+
         $http.post(answer_endpoint, data).then(
             function(response) {
-                debugger;
                 var banner = document.getElementById("banner");
                 var banner_content = document.getElementById("banner-content");
 
@@ -180,28 +194,9 @@ app.config(function($httpProvider) {
                 banner_content.innerText = response.data.msg;
                 banner.style.display = 'block';
 
-                if (response.data.state == 'penalty') {
-                    if (response.data.penalty == 'general') {
-                        debugger;
-                        if (view_port.classList.contains('red-alert')) {
-                            red_alert()
-                        }
-                    } else if (response.data.penalty == 'yellow') {
-                        debugger;
-                        if (view_port.classList.contains('red-alert')) {
-                            red_alert()
-                        }
-                    } else if (response.data.penalty == 'red') {
-                        debugger;
-                        if (!view_port.classList.contains('red-alert')) {
-                            red_alert()
-                        }
-                    }
-                } else if (response.data.state == 'solved') {
-                    debugger;
-                    setTimeout(function() {
-                        location.reload();
-                    }, 10000); // <-- time in milliseconds
+                if (response.data.state == 'solved') {
+                    a.disabled = true
+                    challenge_title.dataset.label = "Challenge "+ id.toString() + " (Complete)" 
                 }
             },
             function(data) {
