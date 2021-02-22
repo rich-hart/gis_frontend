@@ -132,8 +132,10 @@
                 <div id="awards" class="w3-hide w3-container">
                   <div ng-repeat="award in awards">
                     <div class="bar {{colorGen()}}" data-label="Award" style="text-align:right;margin-bottom:5px" ng-click="showElement('award_'+award.id.toString())"></div>
-
                     <div id="award_{{award.id}}" class="w3-hide w3-container">
+                        <div ng-if="award.reward.picture" style="text-align: center;">
+                            <img src="{{award.reward.picture}}" class="center">
+                        </div>
                         <p>{{award.reward.description}}</p>
                     </div>
                   </div>

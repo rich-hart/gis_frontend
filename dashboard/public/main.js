@@ -109,22 +109,32 @@ app.config(function($httpProvider) {
         });
 
     var penalty_endpoint = API_ROOT + 'penalties/current/?format=json';
-    function ping(){
+    function getPenalty(){
         $http.get(penalty_endpoint).then(
             function (response) {
+                var banner = document.getElementById("banner");
+                var banner_content = document.getElementById("banner-content");
+                var view_port = document.getElementById("bracket_32");
                 if (Object.keys(response.data).length == 0) {
                     banner.style.display = 'none';
                 } else {
                     banner.style.display = 'block';
+                    banner_content.innerText = response.data.description;
+                    if (
+                        response.data.type=='red' && 
+                        !view_port.classList.contains('red-alert')
+                    ){
+                        red_alert()
+                    }
                 }
-                setTimeout(ping, 5000);
+               // setTimeout(ping, 5000);
                 //$timeout(ping, 1000);
             },
             function(data) {
 
             });
         } 
-    ping()
+    setTimeout(getPenalty,2000)
 
 
     var challenge_endpoint = API_ROOT + 'challenges/player/?format=json';
@@ -187,16 +197,14 @@ app.config(function($httpProvider) {
 
         $http.post(answer_endpoint, data).then(
             function(response) {
-                var banner = document.getElementById("banner");
-                var banner_content = document.getElementById("banner-content");
 
                 var view_port = document.getElementById("bracket_32");
-                banner_content.innerText = response.data.msg;
-                banner.style.display = 'block';
 
                 if (response.data.state == 'solved') {
                     a.disabled = true
                     challenge_title.dataset.label = "Challenge "+ id.toString() + " (Complete)" 
+                } else {
+                    getPenalty()
                 }
             },
             function(data) {
