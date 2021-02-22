@@ -109,23 +109,30 @@ app.config(function($httpProvider) {
         });
 
     var penalty_endpoint = API_ROOT + 'penalties/current/?format=json';
+    var banner = document.getElementById("banner");
+    var banner_content = document.getElementById("banner-content");
+    var view_port = document.getElementById("bracket_32");
+
     function getPenalty(){
         $http.get(penalty_endpoint).then(
             function (response) {
-                var banner = document.getElementById("banner");
-                var banner_content = document.getElementById("banner-content");
-                var view_port = document.getElementById("bracket_32");
                 if (Object.keys(response.data).length == 0) {
                     banner.style.display = 'none';
                 } else {
+                    debugger
                     banner.style.display = 'block';
                     banner_content.innerText = response.data.description;
-                    if (
-                        response.data.type=='red' && 
-                        !view_port.classList.contains('red-alert')
-                    ){
-                        red_alert()
+                    if (response.data.type=='red'){
+                       banner.style.backgroundColor = "#ff0505"
+                       if (!view_port.classList.contains('red-alert')){
+                           red_alert()
+                       }
+                    } else if (response.data.type=='yellow'){
+                       banner.style.backgroundColor = "#fff705"
+                    } else {
+                       banner.style.backgroundColor = "#005ccc"
                     }
+                    setTimeout(getPenalty, response.data.remaining*1000);
                 }
                // setTimeout(ping, 5000);
                 //$timeout(ping, 1000);
