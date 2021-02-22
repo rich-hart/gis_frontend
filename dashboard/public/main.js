@@ -113,17 +113,52 @@ app.config(function($httpProvider) {
     var banner_content = document.getElementById("banner-content");
     var view_port = document.getElementById("bracket_32");
 
+    function countDown(expires, now){
+        // Set the date we're counting down to
+
+    }
+
     function getPenalty(){
         $http.get(penalty_endpoint).then(
             function (response) {
                 if (Object.keys(response.data).length == 0) {
                     banner.style.display = 'none';
+                       if (view_port.classList.contains('red-alert')){
+                           red_alert()
+                       }
                 } else {
                     debugger
                     banner.style.display = 'block';
                     banner_content.innerText = response.data.description;
                     if (response.data.type=='red'){
                        banner.style.backgroundColor = "#ff0505"
+//                       countDown(response.data.expires, response.data.now)
+                       var countDownDate = Date.parse(response.data.expires);
+                       // Update the count down every 1 second
+                       var x = setInterval(function() {
+                         //debugger
+                         var now = new Date().getTime(); 
+
+                         // Find the distance between now and the count down date
+                         var distance = countDownDate - now;
+                       
+                         // Time calculations for days, hours, minutes and seconds
+                         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                       
+                         // Display the result in the element with id="demo"
+                         if (seconds<10) {
+                             banner_content.innerText = minutes + ":0" + seconds;
+                         } else {
+                             banner_content.innerText = minutes + ":" + seconds;
+                         }
+                         // If the count down is finished, write some text
+                         if (distance < 0) {
+                           clearInterval(x);
+                           document.getElementById("demo").innerHTML = "EXPIRED";
+                         }
+                       }, 1000);
+
                        if (!view_port.classList.contains('red-alert')){
                            red_alert()
                        }
