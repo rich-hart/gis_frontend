@@ -213,7 +213,7 @@ app.config(function($httpProvider) {
                 var results = response.data.results;
                 var global_verified = true;
                 var local_verified = new Object;
-                debugger
+
                 for (i = 0; i < results.length; i++) {
                     awards[results[i].reward.id] = results[i]
                     local_verified[results[i].reward.id] = results[i].verified
@@ -292,7 +292,7 @@ app.config(function($httpProvider) {
                 if (response.data.state == 'solved') {
                     a.disabled = true
                     challenge_title.dataset.label = "Challenge "+ id.toString() + " (Complete)"
-                    getAwards() 
+                    $scope.getAwards() 
                 } else {
                     getPenalty()
                 }
