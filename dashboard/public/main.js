@@ -209,7 +209,13 @@ app.config(function($httpProvider) {
 
     $http.get(award_endpoint).then(
         function(response) {
-            $scope.awards = response.data.results;
+            // FIXME: should not have duplicates
+            var awards = new Object();
+            var results = response.data.results;
+            for (i = 0; i < results.length; i++) {
+                awards[results[i].reward.id] = results[i]
+            }
+            $scope.awards = awards
         },
         function(data) {});
 
