@@ -39,11 +39,11 @@
     <script type="text/javascript" src="main.js"></script>
 
   </head>
-  <body ontouchstart="" onload="main()" style="overflow:scroll">
+  <body ontouchstart="" onload="main()" style="overflow:scroll" ng-app="scavenger_hunt" ng-controller="scavenger_hunt_Ctrl">
       <div id="banner">
         <div id="banner-content"></div>
       </div>
-    <div ng-app="scavenger_hunt" ng-controller="scavenger_hunt_Ctrl">
+    <div>
       <!-- Page Container -->
 
 
@@ -127,19 +127,34 @@
             <!-- Accordion -->
             <div class="w3-card w3-round" ng-if="logged_in">
               <div class="w3-black button-wrap">
-                <div class="button {{colorGen()}}"  onclick="myFunction('awards')" data-label="Awards" style="margin-bottom:5px"></div>
+
+                <div class="button {{colorGen()}} highlight" 
+                     onclick="myFunction('awards')" 
+                     data-label="Awards"
+                     ng-style="{ 'border' : !global_verified ? 'thick solid #0000FF' : '#000000' }"
+                     style="margin-bottom:5px;">
+                </div>
 
                 <div id="awards" class="w3-hide w3-container">
                   <div ng-repeat="award in awards">
-                    <div class="bar {{colorGen()}}" data-label="Award" style="text-align:right;margin-bottom:5px" ng-click="showElement('award_'+award.id.toString())"></div>
+                    <div ng-style="{ 'border' : !local_verified[award.reward.id] ? 'thick solid #0000FF' : '#000000' }" style="margin-bottom:5px;">
+                        <div class="bar {{colorGen()}}" 
+                             data-label="Award" 
+                             style="text-align:right;"
+                             ng-click="verifyElement('award_'+award.id.toString())">
+                        </div>
+                    </div>
                     <div id="award_{{award.id}}" class="w3-hide w3-container">
                         <div ng-if="award.reward.picture" style="text-align: center;">
                             <img src="{{award.reward.picture}}" class="center">
                         </div>
                         <p>{{award.reward.description}}</p>
                     </div>
+
                   </div>
                 </div>
+
+
               </div>
             </div>
             <br>
@@ -189,8 +204,7 @@
                           </p>
                         </div>
 
-                        <div
-                            class="row"
+                        <div class="row"
                             style="max-height:30px"
                             id="row_339"
                             ng-if="!challenge.solution">

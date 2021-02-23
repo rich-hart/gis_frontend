@@ -127,7 +127,6 @@ app.config(function($httpProvider) {
                            red_alert()
                        }
                 } else {
-                    debugger
                     banner.style.display = 'block';
                     banner_content.innerText = response.data.description;
                     if (response.data.type=='red'){
@@ -136,7 +135,6 @@ app.config(function($httpProvider) {
                        var countDownDate = Date.parse(response.data.expires);
                        // Update the count down every 1 second
                        var x = setInterval(function() {
-                         //debugger
                          var now = new Date().getTime(); 
 
                          // Find the distance between now and the count down date
@@ -206,21 +204,34 @@ app.config(function($httpProvider) {
 
 
     var award_endpoint = API_ROOT + 'awards/?format=json';
-    getAwards = function() {
+    
+    $scope.getAwards = function() {
         $http.get(award_endpoint).then(
             function(response) {
                 // FIXME: should not have duplicates
                 var awards = new Object();
                 var results = response.data.results;
+                var global_verified = true;
+                var local_verified = new Object;
+                debugger
                 for (i = 0; i < results.length; i++) {
                     awards[results[i].reward.id] = results[i]
+                    local_verified[results[i].reward.id] = results[i].verified
                 }
-                $scope.awards = awards
+                for (const i in local_verified) {
+                    if(!local_verified[i]){
+                        global_verified = false
+                    }
+                }
+                $scope.awards = awards;
+                $scope.local_verified = local_verified;
+                $scope.global_verified = global_verified;
+
             },
             function(data) {}
         );
     }
-    getAwards()
+    $scope.getAwards()
 
     $scope.showElement = function(id) {
         var x = document.getElementById(id);
@@ -233,7 +244,35 @@ app.config(function($httpProvider) {
                 x.previousElementSibling.className.replace(" w3-theme-d1", "");
         }
     }
+    $scope.verifyAwards = function(id) {
+        var award_instance = API_ROOT + 'awards/'+id+'/?format=json';
+        data = {
+            'verified': true
+        }
 
+        $http.put(award_instance, data).then(
+            function(response) {
+                // FIXME: should not have duplicates
+                $scope.getAwards()
+            },
+            function(data) {
+            }
+        );
+    }
+   
+    $scope.verifyElement = function(id) {
+        var x = document.getElementById(id);
+        var number = id.split('_')[1];
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+            x.previousElementSibling.className += " w3-theme-d1";
+        } else {
+            x.className = x.className.replace("w3-show", "");
+            x.previousElementSibling.className =
+                x.previousElementSibling.className.replace(" w3-theme-d1", "");
+        }
+        $scope.verifyAwards(number) 
+    }
 
 
     $scope.submitAnswer = function(id) {
@@ -259,7 +298,6 @@ app.config(function($httpProvider) {
                 }
             },
             function(data) {
-                debugger;
             }
         );
 

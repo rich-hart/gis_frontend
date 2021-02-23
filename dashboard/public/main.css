@@ -39,3 +39,8 @@ div#banner-content {
   text-align: center;
   color: white;
 }
+
+.highlight {
+    border: "thick solid #0000FF";
+}
+
