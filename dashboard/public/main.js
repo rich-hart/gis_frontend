@@ -206,19 +206,21 @@ app.config(function($httpProvider) {
 
 
     var award_endpoint = API_ROOT + 'awards/?format=json';
-
-    $http.get(award_endpoint).then(
-        function(response) {
-            // FIXME: should not have duplicates
-            var awards = new Object();
-            var results = response.data.results;
-            for (i = 0; i < results.length; i++) {
-                awards[results[i].reward.id] = results[i]
-            }
-            $scope.awards = awards
-        },
-        function(data) {});
-
+    getAwards = function() {
+        $http.get(award_endpoint).then(
+            function(response) {
+                // FIXME: should not have duplicates
+                var awards = new Object();
+                var results = response.data.results;
+                for (i = 0; i < results.length; i++) {
+                    awards[results[i].reward.id] = results[i]
+                }
+                $scope.awards = awards
+            },
+            function(data) {}
+        );
+    }
+    getAwards()
 
     $scope.showElement = function(id) {
         var x = document.getElementById(id);
@@ -250,7 +252,8 @@ app.config(function($httpProvider) {
 
                 if (response.data.state == 'solved') {
                     a.disabled = true
-                    challenge_title.dataset.label = "Challenge "+ id.toString() + " (Complete)" 
+                    challenge_title.dataset.label = "Challenge "+ id.toString() + " (Complete)"
+                    getAwards() 
                 } else {
                     getPenalty()
                 }
