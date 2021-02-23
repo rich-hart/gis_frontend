@@ -153,7 +153,7 @@ app.config(function($httpProvider) {
                          // If the count down is finished, write some text
                          if (distance < 0) {
                            clearInterval(x);
-                           document.getElementById("demo").innerHTML = "EXPIRED";
+                           banner_content.innerText = "0:00";
                          }
                        }, 1000);
 
