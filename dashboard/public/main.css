@@ -33,11 +33,13 @@ div#banner {
 div#banner-content { 
   //width: 800px; 
   //margin: 0 auto; 
-  //padding: 10px; 
+  top: 5px; 
   //border: 1px solid #000;
   height: 40px;
   text-align: center;
   color: white;
+  position: relative;
+
 }
 
 .highlight {
@@ -59,8 +61,10 @@ div#solution-banner-content {
   //margin: 0 auto; 
   //padding: 10px; 
   //border: 1px solid #000;
+  position: relative;
   height: 40px;
   text-align: center;
   color: white;
+  bottom: 13px;
 }
 
