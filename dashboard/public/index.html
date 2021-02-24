@@ -201,9 +201,7 @@
                           </p>
                         </div>
                         <div class="row" style="max-height:30px" id="row_339" ng-if="challenge.solution">
-                          <p id="htmlTag_3456" class="htmlTag text-blue-2" style="text-align: center">
-                            {{challenge.solution.answer.text}}
-                          </p>
+                          <input id="answer_{{challenge.id}}" type="text" name="answer" placeholder="{{challenge.solution.answer.text}}" press-enter="submitAnswer({{challenge.id}})" disabled>
                         </div>
 
                         <div class="row"
