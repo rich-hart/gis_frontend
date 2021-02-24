@@ -159,8 +159,10 @@ app.config(function($httpProvider) {
                          }
                          // If the count down is finished, write some text
                          if (distance < 0) {
+                           banner.style.display = 'none';
                            clearInterval(x);
-                           banner_content.innerText = "RED ALERT  0:00";
+                           //banner_content.innerText = "RED ALERT  0:00";
+
                          }
                        }, 1000);
 
