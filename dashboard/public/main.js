@@ -31,7 +31,10 @@ function main() {
     var logout = document.getElementById("logout");
     var delta = document.createElement("img");
     var profile_pic = document.getElementById('profile_pic');
+    var solution_banner = document.getElementById('solution-banner');
+
     delta.setAttribute('src', 'delta.png');
+
     delta.setAttribute('id', 'delta');
 
     //  red_alert();
@@ -57,6 +60,7 @@ function main() {
     };
     var banner = document.getElementById('banner');
     banner.style.display = 'none';
+    solution_banner.style.display = 'none';
 };
 var API_ROOT = "/api/"
 var app = angular.module("scavenger_hunt", []);
@@ -86,7 +90,9 @@ app.config(function($httpProvider) {
 }).controller("scavenger_hunt_Ctrl", function($scope, $http) {
     //    var temp_api_root = "http://127.0.0.1:8000/api/scavenger_hunt/";
     //    var API_ROOT = temp_api_root;
+    var solution_banner = document.getElementById('solution-banner');
     API_ROOT = '/api/'
+    solution_banner.style.display = 'none';
     $scope.logged_in = false;
     $scope.logged_out = true;
     $scope.is_staff = false;
@@ -111,6 +117,7 @@ app.config(function($httpProvider) {
     var penalty_endpoint = API_ROOT + 'penalties/current/?format=json';
     var banner = document.getElementById("banner");
     var banner_content = document.getElementById("banner-content");
+
     var view_port = document.getElementById("bracket_32");
 
     function countDown(expires, now){
@@ -146,14 +153,14 @@ app.config(function($httpProvider) {
                        
                          // Display the result in the element with id="demo"
                          if (seconds<10) {
-                             banner_content.innerText = minutes + ":0" + seconds;
+                             banner_content.innerText = "RED ALERT  "+minutes + ":0" + seconds;
                          } else {
-                             banner_content.innerText = minutes + ":" + seconds;
+                             banner_content.innerText = "RED ALERT  "+minutes + ":" + seconds;
                          }
                          // If the count down is finished, write some text
                          if (distance < 0) {
                            clearInterval(x);
-                           banner_content.innerText = "0:00";
+                           banner_content.innerText = "RED ALERT  0:00";
                          }
                        }, 1000);
 
@@ -161,9 +168,11 @@ app.config(function($httpProvider) {
                            red_alert()
                        }
                     } else if (response.data.type=='yellow'){
-                       banner.style.backgroundColor = "#fff705"
+                       banner.style.backgroundColor = "#ebc034"
+                       banner_content.innerText = "YELLOW ALERT"
                     } else {
                        banner.style.backgroundColor = "#005ccc"
+                       banner_content.innerText = "ALERT"
                     }
                     setTimeout(getPenalty, response.data.remaining*1000);
                 }
@@ -279,6 +288,8 @@ app.config(function($httpProvider) {
         var answer_endpoint = API_ROOT + 'challenges/' + id.toString() + '/solve/?format=json'
         var a = document.getElementById('answer_' + id.toString());
         var challenge_title = document.getElementById("challenge_title_"+id.toString()) 
+        var solution_banner = document.getElementById('solution-banner');
+        var solution_banner_content = document.getElementById('solution-banner-content');
 
         data = {
             'answer': a.value
@@ -290,9 +301,13 @@ app.config(function($httpProvider) {
                 var view_port = document.getElementById("bracket_32");
 
                 if (response.data.state == 'solved') {
+                    solution_banner.style.display="block";
+                    solution_banner_content.innerText = "CORRECT"
                     a.disabled = true
                     challenge_title.dataset.label = "Challenge "+ id.toString() + " (Complete)"
-                    $scope.getAwards() 
+                    $scope.getAwards()
+                    setTimeout(function(){solution_banner.style.display="none"}, 3000);
+
                 } else {
                     getPenalty()
                 }

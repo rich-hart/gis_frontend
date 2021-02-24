@@ -43,4 +43,24 @@ div#banner-content {
 .highlight {
     border: "thick solid #0000FF";
 }
+div#solution-banner { 
+     width:100%;
+     position: fixed;
+     z-index: 1000; 
+     background: #03adfc;
+     height: 40px;
+     color: #FFFFFF;
+     font-size: 30px;
+     padding:20px;
+     bottom:0px; 
+}
+div#solution-banner-content { 
+  //width: 800px; 
+  //margin: 0 auto; 
+  //padding: 10px; 
+  //border: 1px solid #000;
+  height: 40px;
+  text-align: center;
+  color: white;
+}
 
